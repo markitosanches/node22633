@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            display: block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <label>Id
+            <input type="text" name="id">
+        </label>
+        <label>Name
+            <input type="text" name="name">
+        </label>
+        <label>Password
+            <input type="text" name="password">
+        </label>
+        <label>Profession
+            <input type="text" name="profession">
+        </label>
+        <input type="submit">
+    </form>
+    
+</body>
+    <script>
+        document.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const formData = new FormData(document.getElementById('form')) 
+            const plainFormData  = Object.fromEntries(formData.entries())
+            const formDataJsonString = JSON.stringify(plainFormData)
+
+            //console.log(plainFormData)
+
+            fetch('/add-user', {
+                method:'POST',
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "application/json"
+                },
+                body: formDataJsonString
+            })
+        })
+    </script>
+</html>
