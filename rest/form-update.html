@@ -13,24 +13,41 @@
     </style>
 </head>
 <body>
+   Salut  <span id="gretting"></span>,
     <form id="form">
         <label>Id
-            <input type="text" name="id">
+            <input type="text" name="id" id="id">
         </label>
         <label>Name
-            <input type="text" name="name">
+            <input type="text" name="name" id="name">
         </label>
         <label>Password
-            <input type="text" name="password">
+            <input type="text" name="password" id="password">
         </label>
         <label>Profession
-            <input type="text" name="profession">
+            <input type="text" name="profession" id="profession">
         </label>
         <input type="submit">
     </form>
+    <button type="button" onclick="handleDelete()">Delete</button>
     
 </body>
     <script>
+        const urlParams = new URLSearchParams(window.location.search)
+        const id = urlParams.get('id')
+        //console.log(id)
+
+        fetch('/id='+id)
+            .then(response => response.json())  
+                .then(data => {
+                    //console.log(data)
+                    document.querySelector('#id').value = data.id
+                    document.querySelector('#name').value = data.name
+                    document.querySelector('#password').value = data.password
+                    document.querySelector('#profession').value = data.profession
+                    document.querySelector('#gretting').textContent = data.name
+                })
+
         document.addEventListener('submit', (e) => {
             e.preventDefault()
             const formData = new FormData(document.getElementById('form')) 
@@ -39,8 +56,8 @@
 
             //console.log(plainFormData)
 
-            fetch('/add-user', {
-                method:'POST',
+            fetch('/update-user', {
+                method:'PUT',
                 headers: {
                     "Content-type": "application/json",
                     Accept: "application/json"
@@ -48,5 +65,17 @@
                 body: formDataJsonString
             })
         })
+
+        function handleDelete(){
+            fetch('/delete-user/'+id, {
+                method: 'DELETE',
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "application/json"
+                }
+            })
+        }
+
+
     </script>
 </html>

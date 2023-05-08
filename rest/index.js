@@ -56,6 +56,31 @@ app.get('/id=:id', function (req, res){
     })
 })
 
+app.put('/update-user', function (req, res) {
+    fs.readFile(__dirname + "/user.json", "utf8", function (err, data){
+        data = JSON.parse(data)
+        data['user'+req.body.id] = req.body
+        let newData = JSON.stringify(data)
+        fs.writeFile(__dirname + "/user.json", newData, err => {
+            if(err) throw err
+            console.log('Success')
+        })
+    })
+})
+
+app.delete('/delete-user/:id', function (req, res) {
+    //console.log(req.params.id)
+    fs.readFile(__dirname + "/user.json", "utf8", function (err, data){
+        data = JSON.parse(data)
+        delete data['user'+req.params.id]
+        let newData = JSON.stringify(data)
+        fs.writeFile(__dirname + "/user.json", newData, err => {
+            if(err) throw err
+            console.log('Success')
+        })
+    })
+})
+
 app.listen(8081, function() {
     console.log("App listening at 8081")
 })
