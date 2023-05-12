@@ -1,15 +1,28 @@
 import AbstractView from "./AbstractView.js"
 
 export default class extends AbstractView {
-    constructor() {
-        super()
+    constructor(params) {
+        super(params)
         this.setTitle('Post')
     }
 
     async getHtml(){
+
+        async function getData(url) {
+            const response = await fetch(url)
+            return response.json()
+        }
+        
+        const data = await getData('/static/js/views/posts.json')
+
+        let listPosts = "<ul>"
+        for(let i in data) {
+            listPosts +="<li><a href='/post-view/"+data[i]['id']+"' data-link>"+data[i]['title']+"</a></li>"
+        }
+        listPosts +="</ul>"
+
         return `
             <h1>Posts</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium dicta veniam facere provident earum optio non iste tempore minima distinctio corporis adipisci nihil culpa, sit saepe repellat accusamus est molestiae!</p>
-        `
+        `+listPosts
     }
 }
