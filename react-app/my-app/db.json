@@ -13,8 +13,8 @@
       "reminder": true
     },
     {
-      "text": "Gifts",
-      "day": "Dec 25",
+      "text": "Gift",
+      "day": "25th Dec",
       "reminder": false,
       "id": 3
     }
