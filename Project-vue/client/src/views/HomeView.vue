@@ -18,7 +18,9 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                                <div class="text-center">
+                                    <input type="number" class="form-control qt" v-model.number="product.quantity">
+                                    <a class="btn btn-outline-dark mt-auto" @click="add(product.name, i)">Add to the cart</a></div>
                             </div>
                         </div>
                     </div>
@@ -33,6 +35,6 @@
 
 <script>
 export default {
-  props: ['inventory']
+  props: ['inventory', 'add']
 }
 </script>

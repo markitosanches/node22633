@@ -28,10 +28,14 @@
         </header>
         <RouterView
         :inventory="inventory"
+        :add="addToCart"
         />
         <Sidebar
         v-if="showSideBar"
         :toggle="toggleSideBar"
+        :cart="cart"
+        :inventory="inventory"
+        :remove="removeItem"
         />
 </template>
 
@@ -45,12 +49,21 @@ export default {
   data () {
     return {
       showSideBar: false,
-      inventory: product
+      inventory: product,
+      cart: {}
     }
   },
   methods: {
     toggleSideBar () {
       this.showSideBar = !this.showSideBar
+    },
+    addToCart (product, index) {
+      if (!this.cart[product]) this.cart[product] = 0
+      this.cart[product] += this.inventory[index].quantity
+      console.log(this.cart[product])
+    },
+    removeItem (name) {
+      delete this.cart[name]
     }
   }
 }
