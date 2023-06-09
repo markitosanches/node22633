@@ -9,13 +9,11 @@
                         <li class="nav-item"><RouterLink class="nav-link active" aria-current="page" to="/">Home</RouterLink></li>
                         <li class="nav-item"><RouterLink class="nav-link" to="/about">About</RouterLink></li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
+                        <button class="btn btn-outline-dark" @click="toggleSideBar">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -28,5 +26,32 @@
                 </div>
             </div>
         </header>
-        <RouterView/>
+        <RouterView
+        :inventory="inventory"
+        />
+        <Sidebar
+        v-if="showSideBar"
+        :toggle="toggleSideBar"
+        />
 </template>
+
+<script>
+import Sidebar from '@/components/SideBar.vue'
+import product from '@/product.json'
+export default {
+  components: {
+    Sidebar
+  },
+  data () {
+    return {
+      showSideBar: false,
+      inventory: product
+    }
+  },
+  methods: {
+    toggleSideBar () {
+      this.showSideBar = !this.showSideBar
+    }
+  }
+}
+</script>

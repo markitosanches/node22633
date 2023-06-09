@@ -6,7 +6,7 @@
               Cart
               <i class="bi-cart-fill me-1"></i>
             </span>
-            <button class="cart-close">&times;</button>
+            <button class="cart-close" @click="toggle">&times;</button>
           </h1>
           <div class="cart-body">
             <table class="cart-table">
@@ -22,7 +22,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><img :src="`$@img/100/phone.jpg`" alt="..." /></td>
+                  <td><img :src="require(`@/assets/img/100/phone.jpg`)" alt="..." /></td>
                   <td>Phone</td>
                   <td>$1.00</td>
                   <td class="center">1</td>
@@ -34,7 +34,7 @@
                   </td>
                 </tr>
                 <tr>
-                    <td><img :src="`$@/img/100/game.jpg`" alt="..." /></td>
+                    <td><img :src="require(`@/assets/img/100/game.jpg`)" alt="..." /></td>
                     <td>Game</td>
                     <td>$1.00</td>
                     <td class="center">1</td>
@@ -56,3 +56,9 @@
         </div>
       </aside>
 </template>
+
+<script>
+export default {
+  props: ['toggle']
+}
+</script>
