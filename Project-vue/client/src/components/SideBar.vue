@@ -37,7 +37,7 @@
             </table>
             <p v-if="!Object.keys(cart).length" class="center"><em>No items in cart</em></p>
             <div class="spread">
-              <span><strong>Total:</strong> $1.00</span>
+              <span><strong>Total:</strong> ${{ calculateTotal() }}</span>
               <button class="btn btn-light">Checkout</button>
             </div>
           </div>
@@ -60,6 +60,10 @@ export default {
         return p.name === name
       })
       return product.photo
+    },
+    calculateTotal () {
+      const total = Object.entries(this.cart).reduce((acc, curr) => { return acc + (curr[1] * this.getPrice(curr[0])) }, 0)
+      return total.toFixed(2)
     }
   }
 }

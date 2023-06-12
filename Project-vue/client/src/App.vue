@@ -8,11 +8,12 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><RouterLink class="nav-link active" aria-current="page" to="/">Home</RouterLink></li>
                         <li class="nav-item"><RouterLink class="nav-link" to="/about">About</RouterLink></li>
+                        <li class="nav-item"><RouterLink class="nav-link" :to="{name: 'add-product'}">Add</RouterLink></li>
                     </ul>
                         <button class="btn btn-outline-dark" @click="toggleSideBar">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ totalQuantity }}</span>
                         </button>
                 </div>
             </div>
@@ -37,6 +38,10 @@
         :inventory="inventory"
         :remove="removeItem"
         />
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+        </footer>
 </template>
 
 <script>
@@ -64,6 +69,13 @@ export default {
     },
     removeItem (name) {
       delete this.cart[name]
+    }
+  },
+  computed: {
+    totalQuantity () {
+      return Object.values(this.cart).reduce((acc, curr) => {
+        return acc + curr
+      }, 0)
     }
   }
 }

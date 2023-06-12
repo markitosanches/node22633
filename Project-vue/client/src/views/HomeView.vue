@@ -20,17 +20,17 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
                                     <input type="number" class="form-control qt" v-model.number="product.quantity">
-                                    <a class="btn btn-outline-dark mt-auto" @click="add(product.name, i)">Add to the cart</a></div>
+                                    <a class="btn btn-outline-dark mt-auto" @click="add(product.name, i)">Add to the cart</a>
+                                    <p>
+                                        <RouterLink :to="{name: 'product', params: {id: product.name}}">See more..</RouterLink>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
-        </footer>
 </template>
 
 <script>
