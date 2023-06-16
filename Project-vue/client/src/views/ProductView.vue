@@ -9,9 +9,9 @@
                       <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
                       <div class="fs-5 mb-5">
                           <span class="text-decoration-line-through"></span>
-                          <span>$ {{ product.price.CAD.toFixed(2) }}</span>
+                          <span>$ {{ product.price.toFixed(2) }}</span>
                       </div>
-                      <p class="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi quis inventore quas vero, sequi laudantium eveniet amet eum reiciendis nulla iste. Repellendus laboriosam, minus fuga quis corrupti quibusdam cumque placeat.</p>
+                      <p class="lead">{{ product.description }}</p>
                       <div class="d-flex">
                           <input class="form-control text-center me-3" id="inputQuantity" type="number" style="max-width: 3rem" v-model.number="product.quantity"/>
                           <button class="btn btn-outline-dark flex-shrink-0" type="button" @click="add(product.name, productIndex)">
