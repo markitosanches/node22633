@@ -12,8 +12,7 @@
             "
           >
             <div class="col-sm-12">
-              <h4 class="mb-3">Add new product</h4>
-              <div v-show="message" class="alert alert-danger">{{ message }}</div>
+              <h4 class="mb-3">Edit product</h4>
               <div class="needs-validation" novalidate>
                 <div class="row g-2">
                   <div v-if="!submitted">
@@ -95,14 +94,14 @@
                       Valid photo path is required.
                     </div>
                   </div>
-                  <button class="w-100 btn btn-secondary btn-lg mt-3" type="button" @click="saveProduct">Save </button>
-                  </div>
+                  <button class="w-100 btn btn-secondary btn-lg mt-3" type="button" @click="updateProduct">Update </button>
+                  <button class="w-100 btn btn-danger btn-lg mt-3" type="button" @click="deleteProduct">Delete </button>
+                </div>
                   <div v-else>
                     <div  class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong> You submitted successfully!</strong>
+                    <strong> {{ message }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <button class="w-100 btn btn-success btn-lg mt-3" type="button" @click="newProduct">New product </button>
                   </div>
                   <hr class="my-4">
                 </div>
@@ -118,37 +117,47 @@
 import ProductDataService from '@/services/ProductDataService'
 
 export default {
-  props: ['addInv'],
+  props: ['inventory', 'updateInv', 'removeInv', 'remove'],
   data () {
     return {
       submitted: false,
       message: null,
-      product: {
-        name: null,
-        photo: null,
-        price: null,
-        description: null,
-        type: null
-      }
+      product: {},
+      id: parseInt(this.$route.params.id)
     }
   },
   methods: {
-    saveProduct () {
-      ProductDataService.create(this.product)
+    updateProduct () {
+      ProductDataService.update(this.id, this.product)
         .then(response => {
-          this.product.id = response.data.id
-          this.addInv(this.product)
-          this.submitted = true
-          this.message = null
+          this.updateInv(this.productIndex, this.product)
+          this.message = response.data.message
         })
-        .catch(error => {
-          this.message = error.response.data.message
-        })
+      this.submitted = true
     },
-    newProduct () {
-      this.product = {}
-      this.submitted = false
+    deleteProduct () {
+      ProductDataService.delete(this.id)
+        .then(response => {
+          // this.message = response.data.message
+          this.removeInv(this.productIndex)
+          this.remove(this.product.name)
+          this.$router.push({ name: 'home' })
+        })
     }
+  },
+  computed: {
+    productIndex () {
+      const index = this.inventory.findIndex((p) => {
+        return p.id === this.id
+      })
+      return index
+    }
+  },
+  mounted () {
+    ProductDataService.get(this.id)
+      .then(response => {
+        this.product = response.data
+      })
   }
 }
 </script>
